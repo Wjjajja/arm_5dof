@@ -1,0 +1,13 @@
+/**:
+  ros__parameters:
+    moveit_controller_manager: moveit_fake_controller_manager/MoveItFakeControllerManager
+    moveit_fake_controller_manager:
+      controller_list:
+        - name: fake_arm_controller
+          type: interpolate
+          joints:
+            - joint0
+            - joint1
+            - joint2
+            - joint3
+            - joint4
