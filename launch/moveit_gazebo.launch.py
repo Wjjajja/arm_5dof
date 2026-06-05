@@ -2,7 +2,7 @@
 moveit_gazebo.launch.py — MoveIt2 + Gazebo Ignition 통합 launch
 
 실행:
-  ros2 launch ~/Documents/moveit_gazebo.launch.py
+  ros2 launch arm_5dof moveit_gazebo.launch.py
 
 타임라인:
   0s   Gazebo + robot_state_publisher
@@ -18,14 +18,15 @@ import yaml
 from launch import LaunchDescription
 from launch.actions import ExecuteProcess, TimerAction
 from launch_ros.actions import Node
+from ament_index_python.packages import get_package_share_directory
 
-DOCS = os.path.expanduser('~/Documents')
+PKG = get_package_share_directory('arm_5dof')
 
-URDF_FILE             = os.path.join(DOCS, '5dof_arm.urdf')
-SRDF_FILE             = os.path.join(DOCS, '5dof_arm.srdf')
-KINEMATICS_FILE       = os.path.join(DOCS, 'kinematics.yaml')
-JOINT_LIMITS_FILE     = os.path.join(DOCS, 'joint_limits.yaml')
-MOVEIT_CONTROLLERS    = os.path.join(DOCS, 'moveit_controllers.yaml')
+URDF_FILE             = os.path.join(PKG, 'urdf', '5dof_arm.urdf')
+SRDF_FILE             = os.path.join(PKG, 'config', '5dof_arm.srdf')
+KINEMATICS_FILE       = os.path.join(PKG, 'config', 'kinematics.yaml')
+JOINT_LIMITS_FILE     = os.path.join(PKG, 'config', 'joint_limits.yaml')
+MOVEIT_CONTROLLERS    = os.path.join(PKG, 'config', 'moveit_controllers.yaml')
 
 
 def load_file(path):
@@ -44,6 +45,11 @@ def generate_launch_description():
     robot_description_semantic = load_file(SRDF_FILE)
     kinematics                 = load_yaml(KINEMATICS_FILE)
     joint_limits               = load_yaml(JOINT_LIMITS_FILE)
+
+    # Gazebo needs real file paths, so make a copy with package:// resolved
+    spawn_urdf = '/tmp/5dof_arm_gazebo.urdf'
+    with open(spawn_urdf, 'w') as f:
+        f.write(robot_description_content.replace('package://arm_5dof', PKG))
 
     # ── OMPL planning pipeline (확인된 경로: move_group.planning_plugin) ──
     planning_pipeline_params = {
@@ -108,7 +114,7 @@ def generate_launch_description():
                 executable='create',
                 arguments=[
                     '-name', '5dof_arm',
-                    '-file', URDF_FILE,
+                    '-file', spawn_urdf,
                     '-x', '0', '-y', '0', '-z', '0',
                 ],
                 output='screen',
@@ -178,7 +184,7 @@ def generate_launch_description():
     # ═══════════════════════════════════════════════════════════════
     # 7. RViz with MoveIt (25초 후)
     # ═══════════════════════════════════════════════════════════════
-    rviz_config = os.path.join(DOCS, '5dof_arm_moveit.rviz')
+    rviz_config = os.path.join(PKG, 'config', '5dof_arm_moveit.rviz')
     rviz_args = ['-d', rviz_config] if os.path.exists(rviz_config) else []
 
     rviz_node = TimerAction(

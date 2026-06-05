@@ -7,14 +7,15 @@ import yaml
 from launch import LaunchDescription
 from launch.actions import TimerAction
 from launch_ros.actions import Node
+from ament_index_python.packages import get_package_share_directory
 
-DOCS = os.path.expanduser('~/Documents')
+PKG = get_package_share_directory('arm_5dof')
 
-URDF_FILE             = os.path.join(DOCS, '5dof_arm.urdf')
-SRDF_FILE             = os.path.join(DOCS, '5dof_arm.srdf')
-KINEMATICS_FILE       = os.path.join(DOCS, 'kinematics.yaml')
-JOINT_LIMITS_FILE     = os.path.join(DOCS, 'joint_limits.yaml')
-FAKE_CONTROLLERS_FILE = os.path.join(DOCS, 'fake_controllers.yaml')
+URDF_FILE             = os.path.join(PKG, 'urdf', '5dof_arm.urdf')
+SRDF_FILE             = os.path.join(PKG, 'config', '5dof_arm.srdf')
+KINEMATICS_FILE       = os.path.join(PKG, 'config', 'kinematics.yaml')
+JOINT_LIMITS_FILE     = os.path.join(PKG, 'config', 'joint_limits.yaml')
+FAKE_CONTROLLERS_FILE = os.path.join(PKG, 'config', 'fake_controllers.yaml')
 
 
 def load_file(path):
@@ -100,7 +101,7 @@ def generate_launch_description():
     )
 
     # ── RViz ─────────────────────────────────────────────────────
-    rviz_config = os.path.join(DOCS, '5dof_arm_moveit.rviz')
+    rviz_config = os.path.join(PKG, 'config', '5dof_arm_moveit.rviz')
     rviz_args = ['-d', rviz_config] if os.path.exists(rviz_config) else []
 
     rviz_node = TimerAction(
