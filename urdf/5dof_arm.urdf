@@ -21,14 +21,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/ubuntu/Documents/base_link.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://arm_5dof/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="dark_gray"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/ubuntu/Documents/base_link.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://arm_5dof/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
     <inertial>
@@ -45,14 +45,14 @@
     <visual>
       <origin xyz="0 -0.0005 -0.131" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/ubuntu/Documents/link0.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://arm_5dof/meshes/link0.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="dark_gray"/>
     </visual>
     <collision>
       <origin xyz="0 -0.0005 -0.131" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/ubuntu/Documents/link0.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://arm_5dof/meshes/link0.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
     <inertial>
@@ -70,14 +70,14 @@
     <visual>
       <origin xyz="-0.069 -0.0015 -0.164" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/ubuntu/Documents/link1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://arm_5dof/meshes/link1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="dark_gray"/>
     </visual>
     <collision>
       <origin xyz="-0.069 -0.0015 -0.164" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/ubuntu/Documents/link1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://arm_5dof/meshes/link1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
     <inertial>
@@ -95,14 +95,14 @@
     <visual>
       <origin xyz="-0.0575 -0.0015 -0.4125" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/ubuntu/Documents/link2.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://arm_5dof/meshes/link2.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="dark_gray"/>
     </visual>
     <collision>
       <origin xyz="-0.0575 -0.0015 -0.4125" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/ubuntu/Documents/link2.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://arm_5dof/meshes/link2.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
     <inertial>
@@ -120,14 +120,14 @@
     <visual>
       <origin xyz="-0.0455 -0.0015 -0.644491" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/ubuntu/Documents/link3.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://arm_5dof/meshes/link3.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="dark_gray"/>
     </visual>
     <collision>
       <origin xyz="-0.0455 -0.0015 -0.644491" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/ubuntu/Documents/link3.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://arm_5dof/meshes/link3.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
     <inertial>
@@ -145,14 +145,14 @@
     <visual>
       <origin xyz="-0.0005 -0.0015 -0.763154" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/ubuntu/Documents/link4.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://arm_5dof/meshes/link4.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="light_gray"/>
     </visual>
     <collision>
       <origin xyz="-0.0005 -0.0015 -0.763154" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="file:///home/ubuntu/Documents/link4.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://arm_5dof/meshes/link4.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
     <inertial>
@@ -245,7 +245,7 @@
   <!-- Gazebo plugin -->
   <gazebo>
     <plugin filename="libgz_ros2_control-system.so" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-      <parameters>/home/ubuntu/Documents/controllers.yaml</parameters>
+      <parameters>package://arm_5dof/config/controllers.yaml</parameters>
     </plugin>
   </gazebo>
 
