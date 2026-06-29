@@ -172,6 +172,7 @@
     <parent link="base_link"/>
     <child link="link0"/>
     <limit lower="-3.14159" upper="3.14159" effort="200" velocity="1.0"/>
+    <dynamics damping="0.5" friction="0.5"/>
   </joint>
 
   <!-- J1: Pitch -->
@@ -181,6 +182,7 @@
     <parent link="link0"/>
     <child link="link1"/>
     <limit lower="-1.5708" upper="1.5708" effort="200" velocity="1.0"/>
+    <dynamics damping="0.5" friction="0.5"/>
   </joint>
 
   <!-- J2: Pitch -->
@@ -190,6 +192,7 @@
     <parent link="link1"/>
     <child link="link2"/>
     <limit lower="-1.5708" upper="1.5708" effort="100" velocity="1.0"/>
+    <dynamics damping="0.3" friction="0.3"/>
   </joint>
 
   <!-- J3: Pitch -->
@@ -199,6 +202,7 @@
     <parent link="link2"/>
     <child link="link3"/>
     <limit lower="-1.5708" upper="1.5708" effort="20" velocity="1.0"/>
+    <dynamics damping="0.1" friction="0.1"/>
   </joint>
 
   <!-- J4: Roll -->
@@ -208,6 +212,7 @@
     <parent link="link3"/>
     <child link="link4"/>
     <limit lower="-3.14159" upper="3.14159" effort="10" velocity="1.0"/>
+    <dynamics damping="0.05" friction="0.05"/>
   </joint>
 
   <!-- ros2_control -->
