@@ -8,6 +8,9 @@ controller_manager:
     arm_controller:
       type: joint_trajectory_controller/JointTrajectoryController
 
+    gravity_comp_controller:
+      type: forward_command_controller/ForwardCommandController
+
 arm_controller:
   ros__parameters:
     joints:
@@ -24,3 +27,13 @@ arm_controller:
     state_publish_rate: 50.0
     action_monitor_rate: 20.0
     allow_partial_joints_goal: false
+
+gravity_comp_controller:
+  ros__parameters:
+    joints:
+      - joint0
+      - joint1
+      - joint2
+      - joint3
+      - joint4
+    interface_name: effort
