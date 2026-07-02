@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-/joint_states 를 읽어 KDL로 G(q) 를 계산하고
-/gravity_comp_controller/commands 에 effort 토크를 publish 한다.
+/joint_states → KDL로 G(q) 계산 → /gravity_comp_controller/commands 발행.
+/gravity_comp/enable (Bool) 이 false 이면 zeros 발행 (팔 낙하).
 """
 
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import JointState
-from std_msgs.msg import Float64MultiArray
+from std_msgs.msg import Float64MultiArray, Bool
 
 import PyKDL
 from urdf_parser_py.urdf import URDF
@@ -41,23 +41,34 @@ class GravityCompNode(Node):
         self.q   = PyKDL.JntArray(self.n)
         self.g   = PyKDL.JntArray(self.n)
 
+        self.enabled = True
+
         self.pub = self.create_publisher(
             Float64MultiArray, '/gravity_comp_controller/commands', 10)
         self.create_subscription(
-            JointState, '/joint_states', self._cb, 10)
+            JointState, '/joint_states', self._joint_cb, 10)
+        self.create_subscription(
+            Bool, '/gravity_comp/enable', self._enable_cb, 10)
 
-        self.get_logger().info('gravity_comp_node ready')
+        self.get_logger().info('gravity_comp_node ready  (/gravity_comp/enable 로 on/off)')
 
-    def _cb(self, msg: JointState):
+    def _enable_cb(self, msg: Bool):
+        self.enabled = msg.data
+        state = 'ON' if self.enabled else 'OFF (zeros → 낙하)'
+        self.get_logger().info(f'gravity compensation: {state}')
+
+    def _joint_cb(self, msg: JointState):
         name_to_pos = dict(zip(msg.name, msg.position))
         for i, name in enumerate(JOINT_NAMES):
             if name in name_to_pos:
                 self.q[i] = name_to_pos[name]
 
-        self.dyn.JntToGravity(self.q, self.g)
-
         cmd = Float64MultiArray()
-        cmd.data = [self.g[i] for i in range(self.n)]
+        if self.enabled:
+            self.dyn.JntToGravity(self.q, self.g)
+            cmd.data = [self.g[i] for i in range(self.n)]
+        else:
+            cmd.data = [0.0] * self.n
         self.pub.publish(cmd)
 
 

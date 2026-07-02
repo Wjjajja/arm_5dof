@@ -10,6 +10,7 @@ install(PROGRAMS
   scripts/gravity_comp_node.py
   scripts/switch_to_effort.py
   scripts/switch_to_position.py
+  scripts/drop_robot.py
   DESTINATION lib/${PROJECT_NAME})
 
 ament_package()
